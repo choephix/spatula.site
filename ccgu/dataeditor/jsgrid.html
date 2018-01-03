@@ -35,8 +35,8 @@
 					console.log(dbo.CardTags);
 					
 					cards = JSON.parse( dbo.CardModels );
-					cards = JSON.parse( dbo.DevDecks );
-					cards = JSON.parse( dbo.CardTags );
+					decks = JSON.parse( dbo.DevDecks );
+					cardtags = JSON.parse( dbo.CardTags );
 					
 					initGrid();
 
@@ -73,7 +73,7 @@
 		inserting: true,
 		editing: true,
 		sorting: true,
-		paging: true,
+		paging: false,
 
 		data: cards,
 
