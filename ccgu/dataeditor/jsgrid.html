@@ -12,12 +12,9 @@
   
 	<script type="text/javascript">
 
-		var global = {
-			connection: null,
-			users: {}
-		}
-		
 		var cards = []
+		var decks = []
+		var cardtags = []
 
 		function start() {
 
@@ -31,21 +28,19 @@
 
 			// connect to PlayerIO
 			PlayerIO.authenticate("ccgu-sq4wkgjipkyjyjmfoi4kq", "test", { userId: username }, {}, function (client) {
-				addChatLine('notice', '', 'connected to PlayerIO')
-				log();
-
+				console.log('connected to PlayerIO')
+				
 				client.bigDB.load("Development", "Data", function (dbo) {
 					if (dbo == null)
 						return;
 
-					log(dbo.DevDecks);
-					log();
-					log(dbo.CardModels);
-					log();
-					log(dbo.CardTags);
-					log();
+					console.log(dbo.DevDecks);
+					console.log(dbo.CardModels);
+					console.log(dbo.CardTags);
 					
 					cards = JSON.parse( dbo.CardModels );
+					cards = JSON.parse( dbo.DevDecks );
+					cards = JSON.parse( dbo.CardTags );
 					
 					initGrid();
 
@@ -53,49 +48,17 @@
 			})
 		}
 
-		function callbackError(error) { addChatLine("error", '', "ERROR: " + error.code + ": " + error.message) }
-
-		function log(msg = '\n') { addChatLine("message", '', msg) }
-
-		function addChatLine(className, source, text) {
-			var el = document.createElement('div')
-			el.setAttribute('class', className)
-			el.innerHTML = '<b></b><span></span>'
-			el.getElementsByTagName('b')[0].innerText = source ? source + ': ' : ''
-			el.getElementsByTagName('span')[0].innerText = text
-			var s = document.getElementById("scrollbox")
-			s.appendChild(el)
-			el.scrollIntoView()
-		}
+		function callbackError(error) { console.log( "ERROR: " + error.code + ": " + error.message) }
 
 	</script>
   
   
 </head>
 <body>
-  <div>Test</div>
+ 
 	<pre/>
   <div id="jsGrid"></div>
 	<pre/>
-	<pre/>
-	<pre/>
-  
-	<div id="messages">
-		<div id="scrollbox">
-		</div>
-	</div>
-	<div id="input">
-		<input type="text" onkeypress="handleKeyPress(event)">
-	</div>
-	<div id="users">
-	</div>
-	<div id="pickname">
-		<span>
-			<h1>Pick Name:</h1>
-			<input value="Unnamed" id="namepicker">
-			<button onclick="start()">Start</button>
-		</span>
-	</div>
 
 	<script type="text/javascript">start()</script>
 
@@ -109,7 +72,7 @@
     function initGrid() {
 	    $("#jsGrid").jsGrid({
 		width: "100%",
-		height: "400px",
+		height: "100%",
 
 		inserting: true,
 		editing: true,
