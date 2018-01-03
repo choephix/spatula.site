@@ -20,11 +20,7 @@
 
 			console.log("Ready");
 
-			var username = document.getElementById("namepicker").value
-			document.getElementById("messages").style.display = "block"
-			document.getElementById("input").style.display = "none"
-			document.getElementById("users").style.display = "none"
-			document.getElementById("pickname").style.display = "none"
+			var username = "webeditor";
 
 			// connect to PlayerIO
 			PlayerIO.authenticate("ccgu-sq4wkgjipkyjyjmfoi4kq", "test", { userId: username }, {}, function (client) {
