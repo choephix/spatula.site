@@ -76,6 +76,12 @@
 		paging: false,
 
 		data: cards,
+		    
+		finishInsert: function(insertedItem) {
+		    var grid = this._grid;
+		    grid.option("data").unshift(insertedItem);
+		    grid.refresh();
+		},
 
 		fields: [
 		    { name: "ID", type: "number", width: 15, validate: "required" },
