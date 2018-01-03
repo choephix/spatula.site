@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Data Editor (jsGrid)</title>
+	<link href="css/default.css" rel="stylesheet" />
+	<link type="text/css" rel="stylesheet" href="js/jsgrid/jsgrid.min.css" />
+  <link type="text/css" rel="stylesheet" href="js/jsgrid/jsgrid-theme.min.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src="js/PlayerIOClient.development.js"></script>    
+  <script type="text/javascript" src="js/jsgrid/jsgrid.min.js"></script>  
+	<script type="text/javascript">
+		var cards = []
+		function start() {
+			console.log("Ready");
+			PlayerIO.authenticate("ccgu-sq4wkgjipkyjyjmfoi4kq", "test", { userId: "webeditor" }, {}, function (client) {
+				console.log('connected to PlayerIO')				
+				client.bigDB.load("Development", "To Do", function (dbo) {
+					if (dbo == null) return;
+					console.log(dbo.v2cards);
+					cards = JSON.parse( dbo.v2cards );					
+					initGrid();
+				}, callbackError)
+			})
+		}
+		function callbackError(error) { console.log( "ERROR: " + error.code + ": " + error.message) }
+	</script>    
+</head>
+<body> 
+  <div id="jsGrid"></div>
+  <script type="text/javascript"> 	
+    start();  
+    function initGrid() {
+	    $("#jsGrid").jsGrid({
+		width: "100%",
+		height: "100%",
+		inserting: false,
+		editing: false,
+		sorting: true,
+		paging: false,
+		data: cards,
+		    
+		fields: [
+		    { name: "priority", type: "number", width: 15 },
+		    { name: "slug", type: "text", width: 30 },
+		    { name: "name", type: "text", width: 40 },
+		    { name: "pwr", type: "number", width: 10 },
+		    { name: "desc", type: "textarea", width: 250 },
+        { name: "vars", type: "text", width: 20 },
+		    { name: "stars", type: "number", width: 5 }		    
+		]
+	    });
+    }
+</script> 
+</body>
+</html>
