@@ -45,7 +45,7 @@
 					log(dbo.CardTags);
 					log();
 					
-					cards = dbo.CardModels;
+					cards = JSON.parse( dbo.CardModels );
 					
 					initGrid();
 
