@@ -16,6 +16,8 @@
 			connection: null,
 			users: {}
 		}
+		
+		var cards = []
 
 		function start() {
 
@@ -42,6 +44,8 @@
 					log();
 					log(dbo.CardTags);
 					log();
+					
+					cards = dbo.CardModels;
 
 				}, callbackError)
 			})
@@ -118,14 +122,15 @@
         sorting: true,
         paging: true,
  
-        data: clients,
+        data: cards,
  
         fields: [
-            { name: "Name", type: "text", width: 150, validate: "required" },
-            { name: "Age", type: "number", width: 50 },
-            { name: "Address", type: "text", width: 200 },
-            { name: "Country", type: "select", items: countries, valueField: "Id", textField: "Name" },
-            { name: "Married", type: "checkbox", title: "Is Married", sorting: false },
+            { name: "ID", type: "number", width: 25, validate: "required" },
+						{ name: "Slug", type: "text", width: 100 },
+            { name: "Description", type: "text", width: 200 },
+            { name: "Name", type: "text", width: 100 },
+            //{ name: "Country", type: "select", items: countries, valueField: "Id", textField: "Name" },
+            //{ name: "Married", type: "checkbox", title: "Is Married", sorting: false },
             { type: "control" }
         ]
     });
